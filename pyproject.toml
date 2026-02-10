@@ -5,3 +5,8 @@ description = "RAG creation step-by-step"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = []
+
+[dependency-groups]
+dev = [
+    "ruff>=0.15.0",
+]
