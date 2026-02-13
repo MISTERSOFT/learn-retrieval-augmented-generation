@@ -13,15 +13,15 @@ def main() -> None:
 
     subparsers.add_parser("build", help="Build inverted indexes")
 
-    tf_parser = subparsers.add_parser("tf", help="Display term frequency for a specific movie")
-    tf_parser.add_argument("id", type=int, help="Movie ID")
+    tf_parser = subparsers.add_parser("tf", help="Display term frequency for a specific document")
+    tf_parser.add_argument("doc_id", type=int, help="Document ID")
     tf_parser.add_argument("term", type=str, help="Term")
 
     idf_parser = subparsers.add_parser("idf", help="Calculate the Inverse Document Frequency (IDF) of a term")
     idf_parser.add_argument("term", type=str, help="Term")
 
     tfidf_parser = subparsers.add_parser("tfidf", help="Calculate the TF-IDF (Term Frequency-Inverse Document Frequency) of a term")
-    tfidf_parser.add_argument("doc_id", type=int, help="Movie ID")
+    tfidf_parser.add_argument("doc_id", type=int, help="Document ID")
     tfidf_parser.add_argument("term", type=str, help="Term")
 
     args = parser.parse_args()
@@ -37,7 +37,7 @@ def main() -> None:
             build_command()
 
         case "tf":
-            frequency = tf_command(args.id, args.term)
+            frequency = tf_command(args.doc_id, args.term)
             print(f'Term: {args.term}')
             print(f'Frequency: {frequency}')
 
