@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
-from core.commands import build_command, search_command, tf_command
+from core.commands import build_command, idf_command, search_command, tf_command
 
 
 def main() -> None:
@@ -16,6 +16,9 @@ def main() -> None:
     tf_parser = subparsers.add_parser("tf", help="Display term frequency for a specific movie")
     tf_parser.add_argument("id", type=int, help="Movie ID")
     tf_parser.add_argument("term", type=str, help="Term")
+
+    idf_parser = subparsers.add_parser("idf", help="Calculate the Inverse Document Frequency (IDF) of a term")
+    idf_parser.add_argument("term", type=str, help="Term")
 
     args = parser.parse_args()
 
@@ -33,6 +36,10 @@ def main() -> None:
             frequency = tf_command(args.id, args.term)
             print(f'Term: {args.term}')
             print(f'Frequency: {frequency}')
+
+        case "idf":
+            idf = idf_command(args.term)
+            print(f"Inverse document frequency of '{args.term}': {idf:.2f}")
 
         case _:
             parser.print_help()

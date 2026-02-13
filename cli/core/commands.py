@@ -1,3 +1,4 @@
+import math
 from core.inverted_index import InvertedIndex
 from core.text_processing import text_processing_pipeline, has_matching_token
 from core.utils import load_file
@@ -48,3 +49,19 @@ def tf_command(doc_id: int, term: str):
         exit(1)
 
     return inverted_index.get_tf(doc_id, term)
+
+def idf_command(term):
+    inverted_index = InvertedIndex(stopwords, stemmer)
+    try:
+        inverted_index.load()
+    except:
+        print('Unable to load indexes. Exiting program...')
+        exit(1)
+
+    tokenized_term = text_processing_pipeline(term, stopwords, stemmer)
+    if len(tokenized_term) > 1:
+        raise Exception("Too many terms has been given. Expected one.")
+
+    total_doc_count = len(inverted_index.docmap)
+    term_match_doc_count = len(inverted_index.get_documents(tokenized_term[0]))
+    return math.log((total_doc_count + 1) / (term_match_doc_count + 1))
