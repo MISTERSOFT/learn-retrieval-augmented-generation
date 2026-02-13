@@ -27,7 +27,7 @@ class InvertedIndex:
         for token in tokens:
             if self.index.get(token) is None:
                 self.index[token] = [doc_id]
-            else:
+            if doc_id not in self.index[token]:
                 self.index[token].append(doc_id)
 
     def get_documents(self, term: str):
