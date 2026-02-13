@@ -65,3 +65,20 @@ def idf_command(term):
     total_doc_count = len(inverted_index.docmap)
     term_match_doc_count = len(inverted_index.get_documents(tokenized_term[0]))
     return math.log((total_doc_count + 1) / (term_match_doc_count + 1))
+
+def tfidf_command(doc_id: int, term: str):
+    inverted_index = InvertedIndex(stopwords, stemmer)
+    try:
+        inverted_index.load()
+    except:
+        print('Unable to load indexes. Exiting program...')
+        exit(1)
+
+    term_frequency = inverted_index.get_tf(doc_id, term)
+
+    tokenized_term = text_processing_pipeline(term, stopwords, stemmer)
+    total_doc_count = len(inverted_index.docmap)
+    term_match_doc_count = len(inverted_index.get_documents(tokenized_term[0]))
+    inverse_document_frequency = math.log((total_doc_count + 1) / (term_match_doc_count + 1))
+
+    return term_frequency * inverse_document_frequency
