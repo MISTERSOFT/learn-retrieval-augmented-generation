@@ -57,13 +57,11 @@ def tokenize(text: str) -> list[str]:
     Returns:
         list[str]: List of tokens
     """
-    # Replace whitespaces into single space
-    token = text.replace(r"\s+", " ")
-    # Remove whitespaces from edges
-    token = text.strip()
-    # Split text into token array
-    token = text.split(" ")
-    return token
+    # Split text into token array, also remove whitespaces (space, tab, etc.)
+    tokens = text.split()
+    # Remove empty strings
+    tokens = [text for text in tokens if text]
+    return tokens
 
 def remove_stop_words(tokens: list[str], stopwords: list[str]) -> list[str]:
     """
